@@ -274,3 +274,4 @@ ratings/media/
 .env
 .envs/*
 !.envs/.local/
+.vscode

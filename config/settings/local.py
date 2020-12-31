@@ -58,3 +58,4 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+BOT_TOKEN = env("BOT_TOKEN", default="")

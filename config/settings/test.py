@@ -49,3 +49,4 @@ EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+BOT_TOKEN = env("BOT_TOKEN", default="")

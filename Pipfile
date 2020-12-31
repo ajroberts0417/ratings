@@ -21,6 +21,7 @@ django-crispy-forms = "==1.10.0"
 django-redis = "==4.12.1"
 Pillow = "==8.0.1"
 Django = "==3.0.11"
+graphene-django = "*"
 
 [dev-packages]
 django-stubs = "==1.7.0"

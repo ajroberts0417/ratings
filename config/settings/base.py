@@ -41,9 +41,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///ratings")
-}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///ratings")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
@@ -71,11 +69,13 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "graphene_django",
 ]
 
 LOCAL_APPS = [
     "ratings.users.apps.UsersConfig",
     # Your stuff: custom apps go here
+    "ratings.things.apps.ThingsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -270,3 +270,4 @@ SOCIALACCOUNT_ADAPTER = "ratings.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+GRAPHENE = {"SCHEMA": "ratings.api.schema.schema"}

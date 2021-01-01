@@ -80,6 +80,7 @@ class IncrementRating(graphene.Mutation):
 
         thing_id = graphene.ID()
         discord_user_id = graphene.String(required=False)
+        bot_token = graphene.String(required=False)
 
     rating = graphene.Field(RatingType)
     ok = graphene.Boolean()
@@ -92,7 +93,7 @@ class IncrementRating(graphene.Mutation):
             rating, _ = Rating.objects.update_or_create(
                 thing_id=thing_id, user=user, defaults={"like": True}
             )
-            return IncrementRating(ok=True)
+            return IncrementRating(rating=rating, ok=True)
         if discord_user_id and bot_token == BOT_TOKEN:
             try:
                 discord_user = DiscordUser.objects.get(discord_id=discord_user_id)
@@ -117,6 +118,7 @@ class DecrementRating(graphene.Mutation):
 
         thing_id = graphene.ID()
         discord_user_id = graphene.String(required=False)
+        bot_token = graphene.String(required=False)
 
     rating = graphene.Field(RatingType)
     ok = graphene.Boolean()
@@ -129,7 +131,7 @@ class DecrementRating(graphene.Mutation):
             rating, _ = Rating.objects.update_or_create(
                 thing_id=thing_id, user=user, defaults={"like": False}
             )
-            return IncrementRating(ok=True)
+            return IncrementRating(rating=rating, ok=True)
         if discord_user_id and bot_token == BOT_TOKEN:
             try:
                 discord_user = DiscordUser.objects.get(discord_id=discord_user_id)

@@ -25,7 +25,7 @@ class Tag(BetterModel):
     A tag is primarily a descriptor, like "movie", or "celebrity", or "video game".
     Tags exist in order to classify things."""
 
-    name = models.CharField(max_length=30, db_index=True)
+    name = models.CharField(max_length=30, unique=True, db_index=True)
 
 
 class Thing(BetterModel):
@@ -34,8 +34,8 @@ class Thing(BetterModel):
     A thing is defined exclusively by its metadata.
     """
 
-    name = models.CharField(max_length=50, db_index=True)
-    tags = models.ManyToManyField(Tag, related_name="things", db_index=True)
+    name = models.CharField(max_length=50, unique=True, db_index=True)
+    tags = models.ManyToManyField(Tag, related_name="things", db_index=True, blank=True)
 
     @cached_property
     def get_ratings(self):

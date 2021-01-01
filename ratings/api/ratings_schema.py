@@ -78,7 +78,7 @@ class IncrementRating(graphene.Mutation):
     class Arguments:
         """Define the schema for arguments to the mutation."""
 
-        thing_id = graphene.ID()
+        thing_name = graphene.ID()
         discord_user_id = graphene.String(required=False)
         bot_token = graphene.String(required=False)
 
@@ -86,12 +86,12 @@ class IncrementRating(graphene.Mutation):
     ok = graphene.Boolean()
 
     @staticmethod
-    def mutate(parent: None, info, thing_id, discord_user_id=None, bot_token=""):
+    def mutate(parent: None, info, thing_name, discord_user_id=None, bot_token=""):
         """Perform the mutation."""
         user = info.context.user
         if user.is_authenticated:
             rating, _ = Rating.objects.update_or_create(
-                thing_id=thing_id, user=user, defaults={"like": True}
+                thing_name=thing_name, user=user, defaults={"like": True}
             )
             return IncrementRating(rating=rating, ok=True)
         if discord_user_id and bot_token == BOT_TOKEN:
@@ -103,7 +103,7 @@ class IncrementRating(graphene.Mutation):
                     user=user, discord_id=discord_user_id
                 )
             rating, _ = Rating.objects.update_or_create(
-                thing_id=thing_id, user=discord_user.user, defaults={"like": True}
+                thing_name=thing_name, user=discord_user.user, defaults={"like": True}
             )
             return IncrementRating(rating=rating, ok=True)
 
@@ -116,7 +116,7 @@ class DecrementRating(graphene.Mutation):
     class Arguments:
         """Define the schema for arguments to the mutation."""
 
-        thing_id = graphene.ID()
+        thing_name = graphene.String()
         discord_user_id = graphene.String(required=False)
         bot_token = graphene.String(required=False)
 
@@ -124,12 +124,12 @@ class DecrementRating(graphene.Mutation):
     ok = graphene.Boolean()
 
     @staticmethod
-    def mutate(parent: None, info, thing_id, discord_user_id=None, bot_token=""):
+    def mutate(parent: None, info, thing_name, discord_user_id=None, bot_token=""):
         """Perform the mutation."""
         user = info.context.user
         if user.is_authenticated:
             rating, _ = Rating.objects.update_or_create(
-                thing_id=thing_id, user=user, defaults={"like": False}
+                thing_name=thing_name, user=user, defaults={"like": False}
             )
             return IncrementRating(rating=rating, ok=True)
         if discord_user_id and bot_token == BOT_TOKEN:
@@ -141,7 +141,7 @@ class DecrementRating(graphene.Mutation):
                     user=user, discord_id=discord_user_id
                 )
             rating, _ = Rating.objects.update_or_create(
-                thing_id=thing_id, user=discord_user.user, defaults={"like": False}
+                thing_name=thing_name, user=discord_user.user, defaults={"like": False}
             )
             return IncrementRating(rating=rating, ok=True)
 
